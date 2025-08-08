@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-poppins: 'Poppins', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-poppins);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-poppins);
+  }
+  
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-poppins);
+    font-weight: 300; /* Poppins Light as default */
+  }
+  
+  /* Typography Scale - Following Tailwind conventions */
+  h1, h2, h3, h4, h5, h6,
+  .text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg {
+    font-family: var(--font-poppins);
+    font-weight: 700; /* Poppins Bold for headings */
+  }
+  
+  p, span, div, .text-base, .text-sm, .text-xs {
+    font-family: var(--font-poppins);
+    font-weight: 300; /* Poppins Light for text */
+  }
+}
+
+@layer components {
+  /* Custom typography classes following Tailwind conventions */
+  .font-heading {
+    font-family: var(--font-poppins);
+    font-weight: 700;
+  }
+  
+  .font-body {
+    font-family: var(--font-poppins);
+    font-weight: 300;
+  }
+  
+  .font-medium {
+    font-family: var(--font-poppins);
+    font-weight: 500;
+  }
+  
+  .font-semibold {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+  }
+  
+  /* Override default font weights for specific elements */
+  button, .btn, input, select, textarea {
+    font-family: var(--font-poppins);
+    font-weight: 500; /* Medium weight for interactive elements */
+  }
+  
+  /* Navigation and UI elements */
+  nav, .nav, .menu {
+    font-family: var(--font-poppins);
+    font-weight: 500;
+  }
+}
