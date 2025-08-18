@@ -1,0 +1,37 @@
+# Vercel deployment ignore file
+
+# Development files
+.env
+.env.local
+.env.development
+prisma/dev.db
+prisma/dev.db-journal
+
+# Testing
+test-security.sh
+
+# Documentation
+SECURITY_README.md
+SECURITY_COMPLETE.md
+
+# Development dependencies
+node_modules/.cache
+.next/cache
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/

@@ -1,0 +1,14 @@
+{
+  "buildCommand": "prisma generate && next build",
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 10
+    }
+  },
+  "env": {
+    "PRISMA_GENERATE_DATAPROXY": "true"
+  },
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "framework": "nextjs",
+  "installCommand": "npm ci"
+}
