@@ -1,0 +1,53 @@
+{
+  "posts": {
+    "title": "Manage Articles",
+    "create": "Create Article",
+    "edit": "Edit Article",
+    "delete": "Delete Article",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "draft": "Draft",
+    "published": "Published",
+    "status": "Status",
+    "author": "Author",
+    "publishDate": "Publication date",
+    "lastModified": "Last modified",
+    "actions": "Actions",
+    "noPostsFound": "No articles found",
+    "confirmDelete": "Are you sure you want to delete this article?"
+  },
+  "forms": {
+    "title": "Title",
+    "titlePlaceholder": "Enter the post title",
+    "excerpt": "Excerpt",
+    "excerptPlaceholder": "Brief description of the post",
+    "content": "Content",
+    "imageUrl": "Image URL",
+    "imageUrlPlaceholder": "https://example.com/image.jpg",
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "publishStatus": "Publication Status",
+    "configuration": "Configuration",
+    "required": "Required",
+    "cancel": "Cancel",
+    "createPost": "Create New Post",
+    "editPost": "Edit Post",
+    "creating": "Creating...",
+    "updating": "Updating...",
+    "createAndPublish": "📢 Create and Publish",
+    "createAsDraft": "💾 Create as Draft",
+    "updateAndPublish": "📢 Update and Publish",
+    "updateAsDraft": "💾 Update as Draft",
+    "saveAsDraft": "💾 Save as Draft",
+    "draftStatus": "🟡 Draft (Not visible to public)",
+    "publishedStatus": "🟢 Published (Visible to public)",
+    "draftNote": "⚠️ This post will only be visible in the admin panel",
+    "publishedNote": "✅ This post will be visible immediately on the public blog"
+  },
+  "messages": {
+    "createError": "Error creating post",
+    "updateError": "Error updating post",
+    "postNotFound": "Post not found",
+    "loadError": "Error loading post"
+  }
+}

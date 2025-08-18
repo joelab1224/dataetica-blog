@@ -1,0 +1,29 @@
+{
+  "home": "Inicio",
+  "about": "Sobre nosotros",
+  "blog": "Blog",
+  "articles": "Artículos",
+  "categories": "Categorías",
+  "contact": "Contacto",
+  "admin": "Administración",
+  "dashboard": "Panel de control",
+  "backToBlog": "Volver al blog",
+  "menu": "Menú",
+  "menuItems": {
+    "articles": "Artículos",
+    "topics": "Temas",
+    "about": "Sobre Nosotros",
+    "knowledgeTest": "Test de Conocimiento"
+  },
+  "menuDescriptions": {
+    "articles": "Explorar contenido",
+    "topics": "Navegar por categorías",
+    "about": "Conocer la misión",
+    "knowledgeTest": "Evaluar aprendizaje"
+  },
+  "breadcrumb": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "article": "Artículo"
+  }
+}

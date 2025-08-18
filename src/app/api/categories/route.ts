@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { withAdminAuth, logAdminAction, type AuthenticatedUser } from '@/lib/apiAuth';
 
 // GET /api/categories - Get all categories
 export async function GET() {
@@ -27,8 +28,8 @@ export async function GET() {
   }
 }
 
-// POST /api/categories - Create new category
-export async function POST(request: NextRequest) {
+// POST /api/categories - Create new category (Protected)
+const createCategoryHandler = async (request: NextRequest, user: AuthenticatedUser) => {
   try {
     const body = await request.json();
     const { name, description } = body;
@@ -73,6 +74,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Log admin action for audit trail
+    logAdminAction('CATEGORY_CREATE', user, {
+      categoryId: category.id,
+      name: category.name,
+      slug: category.slug
+    }, request);
+
     return NextResponse.json(category, { status: 201 });
   } catch (error) {
     console.error('Error creating category:', error);
@@ -81,4 +89,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+};
+
+// Export secured POST handler
+export const POST = withAdminAuth(createCategoryHandler);

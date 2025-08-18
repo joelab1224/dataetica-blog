@@ -93,7 +93,7 @@ export async function PUT(
     }
 
     // Update the post
-    const updatedPost = await prisma.post.update({
+    await prisma.post.update({
       where: { id: existingPost.id },
       data: {
         title: title ?? existingPost.title,

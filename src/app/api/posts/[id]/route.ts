@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { withAdminAuth, logAdminAction, type AuthenticatedUser } from '@/lib/apiAuth';
 
 // GET /api/posts/[id] - Get single post
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const resolvedParams = await params;
     const post = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         categories: {
           include: {
@@ -44,18 +46,20 @@ export async function GET(
   }
 }
 
-// PUT /api/posts/[id] - Update post
-export async function PUT(
+// PUT /api/posts/[id] - Update post (Protected)
+const updatePostHandler = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  user: AuthenticatedUser,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   try {
+    const resolvedParams = await params;
     const body = await request.json();
     const { title, excerpt, content, categoryId, status, imageUrl } = body;
 
     // Check if post exists
     const existingPost = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         categories: {
           include: {
@@ -84,7 +88,7 @@ export async function PUT(
       const slugExists = await prisma.post.findFirst({
         where: {
           slug,
-          id: { not: params.id },
+          id: { not: resolvedParams.id },
         },
       });
 
@@ -95,7 +99,7 @@ export async function PUT(
     }
 
     // Prepare update data
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (title !== undefined) updateData.title = title;
     if (excerpt !== undefined) updateData.excerpt = excerpt;
     if (content !== undefined) updateData.content = content;
@@ -109,8 +113,8 @@ export async function PUT(
     if (slug !== existingPost.slug) updateData.slug = slug;
 
     // Update post
-    const post = await prisma.post.update({
-      where: { id: params.id },
+    await prisma.post.update({
+      where: { id: resolvedParams.id },
       data: updateData,
       include: {
         categories: {
@@ -129,14 +133,14 @@ export async function PUT(
       if (currentCategoryId !== categoryId) {
         // Remove existing category relationships
         await prisma.postCategory.deleteMany({
-          where: { postId: params.id },
+          where: { postId: resolvedParams.id },
         });
         
         // Add new category relationship
         if (categoryId) {
           await prisma.postCategory.create({
             data: {
-              postId: params.id,
+              postId: resolvedParams.id,
               categoryId: categoryId,
             },
           });
@@ -146,7 +150,7 @@ export async function PUT(
 
     // Fetch updated post with relationships
     const updatedPost = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         categories: {
           include: {
@@ -156,6 +160,14 @@ export async function PUT(
         author: true,
       },
     });
+
+    // Log admin action for audit trail
+    logAdminAction('POST_UPDATE', user, {
+      postId: resolvedParams.id,
+      title: updatedPost?.title,
+      status: updatedPost?.status,
+      changes: updateData
+    }, request);
 
     // Transform response for admin compatibility
     const transformedPost = {
@@ -175,15 +187,22 @@ export async function PUT(
   }
 }
 
-// DELETE /api/posts/[id] - Delete post
-export async function DELETE(
+// DELETE /api/posts/[id] - Delete post (Protected)
+const deletePostHandler = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  user: AuthenticatedUser,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   try {
+    const resolvedParams = await params;
     // Check if post exists
     const existingPost = await prisma.post.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
+      select: {
+        id: true,
+        title: true,
+        status: true
+      }
     });
 
     if (!existingPost) {
@@ -194,8 +213,15 @@ export async function DELETE(
     }
 
     await prisma.post.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
+
+    // Log admin action for audit trail
+    logAdminAction('POST_DELETE', user, {
+      postId: resolvedParams.id,
+      title: existingPost.title,
+      status: existingPost.status
+    }, request);
 
     return NextResponse.json({ message: 'Post deleted successfully' });
   } catch (error) {
@@ -205,4 +231,8 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+};
+
+// Export secured handlers
+export const PUT = withAdminAuth(updatePostHandler);
+export const DELETE = withAdminAuth(deletePostHandler);

@@ -92,13 +92,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               >
                 Ver Sitio
               </Link>
-              <Button
-                onClick={handleLogout}
-                variant="outline"
-                size="sm"
-              >
-                Cerrar Sesión
-              </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleLogout}
+                  >
+                    Cerrar Sesión
+                  </Button>
             </div>
           </div>
         </div>

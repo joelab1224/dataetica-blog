@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { rateLimit, getClientIP } from '@/lib/rateLimit';
+import { sanitizeMarkdown, sanitizeTitle, sanitizeExcerpt, sanitizeImageUrl } from '@/lib/sanitize';
+import { withAdminAuth, logAdminAction, type AuthenticatedUser } from '@/lib/apiAuth';
 
 // GET /api/posts - Get all posts
 export async function GET(request: NextRequest) {
@@ -9,7 +12,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const limit = searchParams.get('limit');
 
-    const where: any = {};
+    const where: Record<string, unknown> = {};
     
     if (category && category !== 'all') {
       where.categories = {
@@ -59,11 +62,34 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/posts - Create new post
-export async function POST(request: NextRequest) {
+// POST /api/posts - Create new post (Protected)
+const createPostHandler = async (request: NextRequest, user: AuthenticatedUser) => {
   try {
+    // Rate limiting para creación de posts
+    const clientIP = getClientIP(request);
+    const rateLimitResult = rateLimit(`create-post-${clientIP}`, {
+      windowMs: 5 * 60 * 1000, // 5 minutos
+      maxRequests: 3 // 3 posts cada 5 minutos por IP
+    });
+    
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          error: 'Too many posts created. Please wait before creating another.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
-    const { title, excerpt, content, categoryId, status = 'DRAFT', imageUrl } = body;
+    const { title: rawTitle, excerpt: rawExcerpt, content: rawContent, categoryId, status = 'DRAFT', imageUrl: rawImageUrl } = body;
+    
+    // Sanitizar entradas
+    const title = sanitizeTitle(rawTitle);
+    const excerpt = sanitizeExcerpt(rawExcerpt);
+    const content = sanitizeMarkdown(rawContent);
+    const imageUrl = sanitizeImageUrl(rawImageUrl);
 
     if (!title || !excerpt || !content || !categoryId) {
       return NextResponse.json(
@@ -72,17 +98,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get admin user ID from the database
-    const adminUser = await prisma.user.findFirst({
-      where: { role: 'ADMIN' }
-    });
-
-    if (!adminUser) {
-      return NextResponse.json(
-        { error: 'Admin user not found' },
-        { status: 500 }
-      );
-    }
+    // Use authenticated user as author
+    const authorId = user.id;
 
     // Generate slug from title
     const slug = title
@@ -110,7 +127,7 @@ export async function POST(request: NextRequest) {
         content,
         featuredImage: imageUrl || null,
         status,
-        authorId: adminUser.id,
+        authorId,
         publishedAt: status === 'PUBLISHED' ? new Date() : null,
         categories: {
           create: {
@@ -128,6 +145,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Log admin action for audit trail
+    logAdminAction('POST_CREATE', user, {
+      postId: post.id,
+      title: post.title,
+      status: post.status
+    }, request);
+
     // Transform response for admin compatibility
     const transformedPost = {
       ...post,
@@ -144,4 +168,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+};
+
+// Export secured POST handler
+export const POST = withAdminAuth(createPostHandler);

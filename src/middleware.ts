@@ -29,9 +29,8 @@ export async function middleware(request: NextRequest) {
       console.log('Middleware: JWT_SECRET present?', !!process.env.JWT_SECRET);
       console.log('Middleware: Token starts with:', token.substring(0, 20) + '...');
       
-      // Convert secret to Uint8Array for jose
+      // Verify token using jose (Edge Runtime compatible)
       const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
-      
       const { payload } = await jwtVerify(token, secret);
       
       console.log('Middleware: Token verified, user role:', payload.role);
@@ -45,8 +44,12 @@ export async function middleware(request: NextRequest) {
       console.log('Middleware: Access granted to admin route');
     } catch (error) {
       console.log('Middleware: Token verification failed:', error);
-      console.log('Middleware: Error type:', error.constructor.name);
-      console.log('Middleware: Error message:', error.message);
+      if (error instanceof Error) {
+        console.log('Middleware: Error type:', error.constructor.name);
+        console.log('Middleware: Error message:', error.message);
+      } else {
+        console.log('Middleware: Unknown error type:', typeof error);
+      }
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }

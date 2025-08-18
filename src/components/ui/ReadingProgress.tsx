@@ -90,7 +90,7 @@ export default function ReadingProgress({ className = '' }: ReadingProgressProps
 }
 
 // Throttle function to limit scroll event frequency
-function throttle<T extends (...args: any[]) => void>(func: T, delay: number): T {
+function throttle<T extends (...args: unknown[]) => void>(func: T, delay: number): T {
   let timeoutId: NodeJS.Timeout | null = null;
   let lastExecTime = 0;
 

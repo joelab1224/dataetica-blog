@@ -1,0 +1,53 @@
+{
+  "posts": {
+    "title": "Gestionar Artículos",
+    "create": "Crear Artículo",
+    "edit": "Editar Artículo",
+    "delete": "Eliminar Artículo",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "draft": "Borrador",
+    "published": "Publicado",
+    "status": "Estado",
+    "author": "Autor",
+    "publishDate": "Fecha de publicación",
+    "lastModified": "Última modificación",
+    "actions": "Acciones",
+    "noPostsFound": "No se encontraron artículos",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este artículo?"
+  },
+  "forms": {
+    "title": "Título",
+    "titlePlaceholder": "Ingresa el título del post",
+    "excerpt": "Excerpt",
+    "excerptPlaceholder": "Breve descripción del post",
+    "content": "Contenido",
+    "imageUrl": "URL de Imagen",
+    "imageUrlPlaceholder": "https://example.com/image.jpg",
+    "category": "Categoría",
+    "selectCategory": "Selecciona una categoría",
+    "publishStatus": "Estado de Publicación",
+    "configuration": "Configuración",
+    "required": "Requerido",
+    "cancel": "Cancelar",
+    "createPost": "Crear Nuevo Post",
+    "editPost": "Editar Post",
+    "creating": "Creando...",
+    "updating": "Actualizando...",
+    "createAndPublish": "📢 Crear y Publicar",
+    "createAsDraft": "💾 Crear como Borrador",
+    "updateAndPublish": "📢 Actualizar y Publicar",
+    "updateAsDraft": "💾 Actualizar como Borrador",
+    "saveAsDraft": "💾 Guardar como Borrador",
+    "draftStatus": "🟡 Borrador (No visible al público)",
+    "publishedStatus": "🟢 Publicado (Visible al público)",
+    "draftNote": "⚠️ Este post solo será visible en el panel de administración",
+    "publishedNote": "✅ Este post será visible inmediatamente en el blog público"
+  },
+  "messages": {
+    "createError": "Error al crear el post",
+    "updateError": "Error al actualizar el post",
+    "postNotFound": "Post no encontrado",
+    "loadError": "Error al cargar el post"
+  }
+}

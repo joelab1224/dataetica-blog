@@ -7,15 +7,16 @@ import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import SafeErrorMessage, { useSafeError } from '@/components/ui/SafeErrorMessage';
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { error, showError, clearError } = useSafeError();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(true);
 
   // Check if user is already authenticated
@@ -28,7 +29,7 @@ export default function AdminLoginPage() {
           router.replace('/admin/dashboard');
           return;
         }
-      } catch (error) {
+      } catch {
         // User is not logged in, stay on login page
         console.log('User not authenticated');
       } finally {
@@ -54,7 +55,7 @@ export default function AdminLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    clearError();
 
     try {
       console.log('Login: Submitting credentials...');
@@ -87,7 +88,7 @@ export default function AdminLoginPage() {
       }, 100);
     } catch (err) {
       console.error('Login: Error occurred:', err);
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      showError(err);
     } finally {
       setLoading(false);
     }
@@ -117,11 +118,7 @@ export default function AdminLoginPage() {
 
           <Card variant="elevated" className="p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-large mb-6">
-                {error}
-              </div>
-            )}
+            <SafeErrorMessage error={error} onDismiss={clearError} />
 
             <div>
               <label htmlFor="email" className="block text-nav-card font-semibold text-primary mb-2">

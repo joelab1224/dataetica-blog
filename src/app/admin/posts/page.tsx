@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import AuthGuard from '@/components/auth/AuthGuard';
@@ -28,7 +27,6 @@ function PostsManagementContent() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'ALL' | 'PUBLISHED' | 'DRAFT'>('ALL');
-  const router = useRouter();
 
   useEffect(() => {
     fetchPosts();
@@ -134,7 +132,7 @@ function PostsManagementContent() {
               ].map(({ key, label }) => (
                 <button
                   key={key}
-                  onClick={() => setFilter(key as any)}
+                  onClick={() => setFilter(key as 'ALL' | 'PUBLISHED' | 'DRAFT')}
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     filter === key
                       ? 'bg-purple-100 text-purple-700'
@@ -195,14 +193,14 @@ function PostsManagementContent() {
                   
                   <div className="flex items-center space-x-2 ml-4">
                     <Link href={`/admin/posts/${post.id}/edit`}>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="secondary">
                         Editar
                       </Button>
                     </Link>
                     
                     <Button
                       size="sm"
-                      variant={post.status === 'PUBLISHED' ? 'outline' : 'primary'}
+                      variant={post.status === 'PUBLISHED' ? 'secondary' : 'primary'}
                       onClick={() => handleStatusChange(
                         post.id,
                         post.status === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED'
@@ -218,7 +216,7 @@ function PostsManagementContent() {
                     
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="secondary"
                       onClick={() => handleDelete(post.id)}
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >

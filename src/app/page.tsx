@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import BlogPostCard from '@/components/BlogPostCard';
 import BlogFilters from '@/components/BlogFilters';
@@ -13,6 +13,9 @@ import EthicsIconPattern from '@/components/ui/EthicsIconPattern';
 import FeaturedArticlesSection from '@/components/FeaturedArticlesSection';
 import StatisticsSection from '@/components/StatisticsSection';
 import TopicsSection from '@/components/TopicsSection';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
+import { formatDate } from '@/lib/utils/dateFormatter';
+import { type Locale } from '@/lib/i18n/config';
 
 interface BlogPost {
   id: string;
@@ -46,7 +49,8 @@ interface Category {
   description?: string;
 }
 
-export default function HomePage(): JSX.Element {
+function HomePageContent(): JSX.Element {
+  const { t, currentLanguage } = useClientTranslation(['blog', 'common']);
   const searchParams = useSearchParams();
   
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -122,12 +126,16 @@ export default function HomePage(): JSX.Element {
   useEffect(() => {
     fetchPosts(1, filters);
     fetchCategories();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle filter changes
   const handleFiltersChange = (newFilters: { category?: string; search?: string }) => {
-    setFilters(newFilters);
-    fetchPosts(1, newFilters);
+    const updatedFilters = {
+      category: newFilters.category || undefined,
+      search: newFilters.search || undefined,
+    };
+    setFilters(updatedFilters);
+    fetchPosts(1, updatedFilters);
   };
 
   // Handle pagination
@@ -190,7 +198,7 @@ export default function HomePage(): JSX.Element {
           variant="secondary"
           size="sm"
         >
-          Anterior
+          {t('common:previous')}
         </Button>
         
         {pages}
@@ -201,7 +209,7 @@ export default function HomePage(): JSX.Element {
           variant="secondary"
           size="sm"
         >
-          Siguiente
+          {t('common:next')}
         </Button>
       </div>
     );
@@ -237,23 +245,22 @@ export default function HomePage(): JSX.Element {
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs">🔬</span>
                     </div>
-                    <span>Investigación en Ética Digital</span>
+                    <span>{t('hero.badge')}</span>
                   </div>
                 </div>
                 
                 {/* Main Title */}
                 <div className="space-y-6">
                   <h1 className="text-5xl lg:text-7xl font-heading text-gray-900 leading-tight">
-                    Navegando el
+                    {t('hero.title')}
                     <span className="block bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent">
-                      futuro digital
+                      {t('hero.titleHighlight')}
                     </span>
-                    con ética
+                    {t('hero.titleEnd')}
                   </h1>
                   
                   <p className="text-xl text-gray-600 font-body leading-relaxed max-w-2xl">
-                    Exploramos cómo la tecnología moldea nuestra sociedad y construimos
-                    un futuro más consciente a través del análisis crítico y la reflexión ética.
+                    {t('hero.subtitle')}
                   </p>
                 </div>
                 
@@ -266,7 +273,7 @@ export default function HomePage(): JSX.Element {
                     className="font-semibold px-8 py-4 group transition-all duration-300 hover:scale-105 hover:shadow-xl min-w-[200px]"
                   >
                     <span className="flex items-center justify-center">
-                      Explorar Artículos
+                      {t('hero.exploreArticles')}
                       <svg className="w-5 h-5 ml-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
@@ -293,7 +300,7 @@ export default function HomePage(): JSX.Element {
                       <svg className="w-5 h-5 mr-3 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                       </svg>
-                      Ver Temas
+                      {t('hero.viewTopics')}
                     </span>
                   </Button>
                 </div>
@@ -306,13 +313,13 @@ export default function HomePage(): JSX.Element {
                       <div className="w-8 h-8 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full border-2 border-white flex items-center justify-center text-xs">👩‍🔬</div>
                       <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full border-2 border-white flex items-center justify-center text-xs">🎓</div>
                     </div>
-                    <span className="font-medium">Leído por profesionales tech</span>
+                    <span className="font-medium">{t('hero.socialProof')}</span>
                   </div>
                   
                   
                   <div className="flex items-center space-x-2">
                     <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                    <span className="font-medium">Actualizado semanalmente</span>
+                    <span className="font-medium">{t('hero.updatedWeekly')}</span>
                   </div>
                 </div>
               </div>
@@ -326,12 +333,12 @@ export default function HomePage(): JSX.Element {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                          <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Artículo Destacado</span>
+                          <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">{t('hero.featuredArticle')}</span>
                         </div>
                         <div className="text-xs text-gray-500">
-                          {new Date(posts[0].publishedAt).toLocaleDateString('es-ES', { 
-                            month: 'short', 
-                            day: 'numeric' 
+                          {formatDate(posts[0].publishedAt, currentLanguage as Locale, {
+                            month: 'short',
+                            day: 'numeric'
                           })}
                         </div>
                       </div>
@@ -346,7 +353,7 @@ export default function HomePage(): JSX.Element {
                       
                       <div className="flex items-center justify-between pt-2">
                         <div className="flex items-center space-x-2">
-                          {posts[0].categories.slice(0, 2).map((category, index) => (
+                          {posts[0].categories.slice(0, 2).map((category) => (
                             <span key={category.slug} className="px-2 py-1 bg-purple-50 text-purple-600 rounded-full text-xs font-medium">
                               {category.name}
                             </span>
@@ -354,7 +361,7 @@ export default function HomePage(): JSX.Element {
                         </div>
                         
                         <div className="flex items-center text-purple-600 text-sm font-medium group-hover:translate-x-1 transition-transform duration-300">
-                          <span>Leer más</span>
+                          <span>{t('common:readMore')}</span>
                           <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
@@ -367,23 +374,23 @@ export default function HomePage(): JSX.Element {
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 gap-4">
                   <div className="bg-white/60 backdrop-blur-sm rounded-large border border-gray-100 p-6 text-center hover:shadow-lg transition-all duration-300">
-                    <div className="text-lg font-heading text-purple-600 mb-1">Contenido Original</div>
-                    <div className="text-xs text-gray-600 font-medium">Investigación independiente</div>
+                    <div className="text-lg font-heading text-purple-600 mb-1">{t('hero.originalContent')}</div>
+                    <div className="text-xs text-gray-600 font-medium">{t('hero.independentResearch')}</div>
                   </div>
                 </div>
                 
                 {/* Value Proposition Cards */}
                 <div className="space-y-3">
                   {[
-                    { icon: '🤖', text: 'Análisis crítico de IA' },
-                    { icon: '🔒', text: 'Privacidad y datos' },
-                    { icon: '⚖️', text: 'Marco ético tecnológico' }
+                    { icon: '🤖', textKey: 'hero.valueProps.aiAnalysis' },
+                    { icon: '🔒', textKey: 'hero.valueProps.privacyData' },
+                    { icon: '⚖️', textKey: 'hero.valueProps.ethicalFramework' }
                   ].map((item, index) => (
                     <div key={index} className="flex items-center space-x-3 p-3 bg-white/40 backdrop-blur-sm rounded-large border border-gray-50 hover:bg-white/60 transition-all duration-300">
                       <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-lg flex items-center justify-center text-sm">
                         {item.icon}
                       </div>
-                      <span className="text-sm font-medium text-gray-700">{item.text}</span>
+                      <span className="text-sm font-medium text-gray-700">{t(item.textKey)}</span>
                     </div>
                   ))}
                 </div>
@@ -419,13 +426,13 @@ export default function HomePage(): JSX.Element {
         <div className="text-center mb-8">
           <h2 className="text-section-header text-primary mb-4 font-heading">
             {showAllArticles || filters.search || filters.category 
-              ? 'Todos los Artículos' 
-              : 'Explora Nuestro Contenido'
+              ? t('articles.title') 
+              : t('articles.exploreContent')
             }
           </h2>
           {(!showAllArticles && !filters.search && !filters.category) && (
             <p className="text-body text-secondary max-w-2xl mx-auto">
-              Utiliza los filtros para encontrar exactamente lo que buscas
+              {t('articles.useFilters')}
             </p>
           )}
         </div>
@@ -447,9 +454,13 @@ export default function HomePage(): JSX.Element {
             {!loading && (
               <div className="mb-6 text-secondary text-nav-card font-body">
                 {pagination.totalPosts === 0 ? (
-                  'No se encontraron artículos'
+                  t('articles.noArticles')
                 ) : (
-                  `Mostrando ${((pagination.page - 1) * pagination.pageSize) + 1}-${Math.min(pagination.page * pagination.pageSize, pagination.totalPosts)} de ${pagination.totalPosts} artículos`
+                  t('articles.showing', { 
+                    start: ((pagination.page - 1) * pagination.pageSize) + 1,
+                    end: Math.min(pagination.page * pagination.pageSize, pagination.totalPosts),
+                    total: pagination.totalPosts 
+                  })
                 )}
               </div>
             )}
@@ -459,19 +470,19 @@ export default function HomePage(): JSX.Element {
                 <div className="text-secondary text-section-header space-y-4">
                   {filters.search || filters.category ? (
                     <React.Fragment>
-                      <p className="font-body">No se encontraron artículos que coincidan con los filtros seleccionados.</p>
+                      <p className="font-body">{t('articles.noMatchingArticles')}</p>
                       <Button
                         onClick={() => {
-                          setFilters({});
-                          fetchPosts(1, {});
+                          setFilters({ category: undefined, search: undefined });
+                          fetchPosts(1, { category: undefined, search: undefined });
                         }}
                         variant="primary"
                       >
-                        Ver todos los artículos
+                        {t('articles.seeAllArticles')}
                       </Button>
                     </React.Fragment>
                   ) : (
-                    <p className="font-body">No hay artículos disponibles en este momento.</p>
+                    <p className="font-body">{t('articles.noArticles')}</p>
                   )}
                 </div>
               </div>
@@ -490,5 +501,13 @@ export default function HomePage(): JSX.Element {
       
       <Footer />
     </div>
+  );
+}
+
+export default function HomePage(): JSX.Element {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomePageContent />
+    </Suspense>
   );
 }

@@ -15,16 +15,16 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * pageSize;
     
     // Build where clause
-    const whereClause: any = {};
+    const where: Record<string, unknown> = {};
     
     // Status filter
     if (status !== 'ALL') {
-      whereClause.status = status as PostStatus;
+      where.status = status as PostStatus;
     }
     
     // Category filter
     if (category) {
-      whereClause.categories = {
+      where.categories = {
         some: {
           category: {
             slug: category
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     
     // Search filter
     if (search) {
-      whereClause.OR = [
+      where.OR = [
         { title: { contains: search, mode: 'insensitive' } },
         { excerpt: { contains: search, mode: 'insensitive' } },
         { content: { contains: search, mode: 'insensitive' } }
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     
     // Fetch posts with pagination
     const posts = await prisma.post.findMany({
-      where: whereClause,
+      where,
       select: {
         id: true,
         title: true,
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
     
     // Get total count for pagination
     const totalPosts = await prisma.post.count({
-      where: whereClause,
+      where,
     });
     
     const totalPages = Math.ceil(totalPosts / pageSize);

@@ -1,0 +1,204 @@
+{
+  "title": "Dataetica Blog",
+  "tagline": "Exploring ethics in the digital age",
+  "description": "We navigate together the impact of technology on our lives, analyzing how digital decisions shape our society and build a more conscious future.",
+  "hero": {
+    "badge": "Digital Ethics Research",
+    "title": "Navigating the",
+    "titleHighlight": "digital future",
+    "titleEnd": "with ethics",
+    "subtitle": "We explore how technology shapes our society and build a more conscious future through critical analysis and ethical reflection.",
+    "exploreArticles": "Explore Articles",
+    "viewTopics": "View Topics",
+    "socialProof": "Read by tech professionals",
+    "updatedWeekly": "Updated weekly",
+    "featuredArticle": "Featured Article",
+    "originalContent": "Original Content",
+    "independentResearch": "Independent research",
+    "valueProps": {
+      "aiAnalysis": "Critical AI analysis",
+      "privacyData": "Privacy and data",
+      "ethicalFramework": "Ethical tech framework"
+    }
+  },
+  "articles": {
+    "title": "All Articles",
+    "exploreContent": "Explore Our Content",
+    "useFilters": "Use filters to find exactly what you're looking for",
+    "showing": "Showing {{start}}-{{end}} of {{total}} articles",
+    "noArticles": "No articles available at the moment",
+    "noMatchingArticles": "No articles found matching the selected filters.",
+    "seeAllArticles": "See all articles",
+    "readingTime": "{{minutes}} min read",
+    "publishedOn": "Published on {{date}}",
+    "by": "by",
+    "tags": "Tags",
+    "relatedArticles": "Related articles",
+    "shareArticle": "Share article",
+    "shareOn": "Share on {{platform}}"
+  },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Explore our main topics",
+    "allCategories": "All categories",
+    "articlesInCategory": "{{count}} article in {{category}}",
+    "articlesInCategory_plural": "{{count}} articles in {{category}}"
+  },
+  "search": {
+    "placeholder": "Search articles...",
+    "searchBy": "Search by:",
+    "title": "Title",
+    "content": "Content",
+    "author": "Author",
+    "noResults": "No articles found for \"{{query}}\"",
+    "resultsFor": "Results for \"{{query}}\"",
+    "searchResults": "{{count}} result",
+    "searchResults_plural": "{{count}} results"
+  },
+  "filters": {
+    "filterBy": "Filter by",
+    "category": "Category",
+    "date": "Date",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "popular": "Popular",
+    "clearFilters": "Clear filters",
+    "applyFilters": "Apply filters",
+    "activeFilters": "Active filters"
+  },
+  "stats": {
+    "totalArticles": "Total articles",
+    "totalCategories": "Total categories",
+    "recentArticles": "Recent articles",
+    "thisMonth": "This month",
+    "thisWeek": "This week",
+    "ourImpact": "Our Impact",
+    "buildingCommunity": "Building a conscious community about digital ethics",
+    "articlesPublished": "Articles Published",
+    "deepReflections": "Deep reflections on digital ethics",
+    "topicsCovered": "Topics Covered",
+    "fromAiToPrivacy": "From AI to data privacy",
+    "foundingYear": "Founding Year",
+    "committedToEthics": "Committed to technological ethics"
+  },
+  "footer": {
+    "links": "Links",
+    "contact": "Contact",
+    "copyright": "© {{year}} DataÉtica. All rights reserved."
+  },
+  "about": {
+    "title": "DataÉtica: Navigating Digital Ethics",
+    "subtitle": "We explore the impact of technology on our society, analyzing how digital decisions shape our future and building a more conscious and ethical world.",
+    "sections": {
+      "focusAreas": {
+        "title": "Our Areas of Reflection",
+        "subtitle": "We navigate the complex intersection between digital transformation, critical capacity, and social construction to understand how technology redefines the human condition.",
+        "areas": {
+          "digitalTransformation": {
+            "title": "Conscious Digitalization",
+            "description": "We explore how digital transformation redefines human experience and social structures.",
+            "details": "We analyze the tension between technological efficiency and preservation of fundamental human values."
+          },
+          "digitalLiteracy": {
+            "title": "Digital Literacy",
+            "description": "We investigate the gap between technical knowledge and critical understanding of technology.",
+            "details": "We examine how the ability to \"read\" the digital world determines social participation."
+          },
+          "socialCohesion": {
+            "title": "Social Cohesion",
+            "description": "We study how technological mediation affects social fabric and human relationships.",
+            "details": "We reflect on building communities in hybrid physical-digital spaces."
+          }
+        }
+      },
+      "values": {
+        "title": "Our Foundations",
+        "subtitle": "The principles that guide our work and our vision of the digital future.",
+        "mission": {
+          "title": "MISSION",
+          "items": [
+            "Promote critical reflection on technology",
+            "Generate awareness about digital decisions",
+            "Build a more ethical technological future"
+          ]
+        },
+        "vision": {
+          "title": "VISION",
+          "items": [
+            "Society that understands technological impact",
+            "Digitally empowered citizens",
+            "Technology at the service of human well-being"
+          ]
+        },
+        "values": {
+          "title": "VALUES",
+          "items": [
+            "Transparency in analysis",
+            "Academic rigor and research",
+            "Knowledge accessibility"
+          ]
+        }
+      },
+      "whyDataetica": {
+        "title": "Why DataÉtica?",
+        "subtitle": "We live in a crucial moment in human history.",
+        "reasons": {
+          "automatedDecisions": {
+            "title": "Automated Decisions",
+            "description": "We live in an era where technology makes decisions that affect our daily lives: what we see, what opportunities we receive, how we are evaluated."
+          },
+          "understandingGap": {
+            "title": "Understanding Gap",
+            "description": "Many people don't understand how the algorithms around them work, creating a dangerous disconnect between technology and society."
+          },
+          "knowledgeDemocratization": {
+            "title": "Knowledge Democratization",
+            "description": "We create accessible content to democratize knowledge about digital ethics, making complex concepts understandable to everyone."
+          },
+          "consciousFuture": {
+            "title": "Conscious Future",
+            "description": "We foster critical thinking and citizen participation to build a more conscious and ethical technological future."
+          }
+        },
+        "quote": "\"Digital ethics is not only the responsibility of technologists, it is the responsibility of all of us as citizens of the digital age.\"",
+        "quoteAuthor": "— DataÉtica Philosophy"
+      },
+      "approaches": {
+        "title": "Our Approaches",
+        "subtitle": "We combine academic rigor with accessibility to create real impact.",
+        "research": {
+          "title": "RESEARCH",
+          "items": [
+            "Real case analysis",
+            "Social impact studies",
+            "Digital policy review"
+          ]
+        },
+        "education": {
+          "title": "EDUCATION",
+          "items": [
+            "Accessible articles",
+            "Practical guides",
+            "Educational resources"
+          ]
+        },
+        "community": {
+          "title": "COMMUNITY",
+          "items": [
+            "Dialogue promotion",
+            "Citizen participation",
+            "Interdisciplinary collaboration"
+          ]
+        }
+      },
+      "joinConversation": {
+        "title": "Join the Conversation",
+        "subtitle": "Building an ethical digital future requires everyone's participation. Every voice, every perspective, every question is valuable in this crucial conversation.",
+        "message": "\"The future is not something that happens to us, it is something we create together. Participate in building a more just and conscious digital world.\"",
+        "exploreArticles": "Explore Articles",
+        "knowledgeTest": "Knowledge Test",
+        "collaborateText": "Have questions or want to collaborate?"
+      }
+    }
+  }
+}

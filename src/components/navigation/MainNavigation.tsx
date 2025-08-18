@@ -2,19 +2,41 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface NavigationProps {
   className?: string;
 }
 
 export default function MainNavigation({ className = '' }: NavigationProps) {
+  const { t } = useClientTranslation('navigation');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const navItems = [
-    { label: 'Artículos', href: '/', description: 'Explorar contenido', icon: '📰' },
-    { label: 'Temas', href: '/#topics', description: 'Navegar por categorías', icon: '📚' },
-    { label: 'Sobre Nosotros', href: '/about', description: 'Conocer la misión', icon: '🔍' },
-    { label: 'Test de Conocimiento', href: '/test', description: 'Evaluar aprendizaje', icon: '🎯' }
+    { 
+      label: t('menuItems.articles'), 
+      href: '/', 
+      description: t('menuDescriptions.articles'), 
+      icon: '📰' 
+    },
+    { 
+      label: t('menuItems.topics'), 
+      href: '/#topics', 
+      description: t('menuDescriptions.topics'), 
+      icon: '📚' 
+    },
+    { 
+      label: t('menuItems.about'), 
+      href: '/about', 
+      description: t('menuDescriptions.about'), 
+      icon: '🔍' 
+    },
+    { 
+      label: t('menuItems.knowledgeTest'), 
+      href: '/test', 
+      description: t('menuDescriptions.knowledgeTest'), 
+      icon: '🎯' 
+    }
   ];
 
   const toggleMobileMenu = () => {
@@ -51,7 +73,7 @@ export default function MainNavigation({ className = '' }: NavigationProps) {
         <div className="md:hidden">
           {/* Mobile Header */}
           <div className="flex items-center justify-between py-3">
-            <span className="text-nav-card font-semibold text-primary">Menú</span>
+            <span className="text-nav-card font-semibold text-primary">{t('menu')}</span>
             <button
               onClick={toggleMobileMenu}
               className="p-2 text-primary hover:bg-gray-100 rounded-lg transition-colors"

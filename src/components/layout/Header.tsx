@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface HeaderProps {
   title?: string;
@@ -15,10 +17,10 @@ interface HeaderProps {
 export default function Header({ 
   showBackButton = false,
   backButtonHref = '/',
-  backButtonText = 'Volver al blog',
   className = '',
   variant = 'default'
 }: HeaderProps) {
+  const { t } = useClientTranslation('navigation');
   const getHeaderClasses = () => {
     if (variant === 'hero') {
       return 'header-gradient-blur';
@@ -34,7 +36,7 @@ export default function Header({
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            {backButtonText}
+            {t('backToBlog')}
           </Link>
         )}
         
@@ -53,9 +55,9 @@ export default function Header({
             </Link>
           </div>
           
-          {/* Right side - can be used for future nav items */}
+          {/* Right side - Language switcher */}
           <div className="flex items-center">
-            {/* Space for future header actions */}
+            <LanguageSwitcher variant="toggle" showLabels={false} />
           </div>
         </div>
       </div>

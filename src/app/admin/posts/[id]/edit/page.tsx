@@ -9,6 +9,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 // Dynamically import the markdown editor to avoid SSR issues
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
@@ -29,6 +30,7 @@ interface FormData {
 }
 
 function EditPostContent() {
+  const { t } = useClientTranslation('admin');
   const [formData, setFormData] = useState<FormData>({
     title: '',
     excerpt: '',
@@ -48,6 +50,7 @@ function EditPostContent() {
   useEffect(() => {
     fetchCategories();
     fetchPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   const fetchCategories = async () => {
@@ -93,12 +96,12 @@ function EditPostContent() {
           imageUrl: post.imageUrl || '',
         });
       } else {
-        alert('Post no encontrado');
+        alert(t('messages.postNotFound'));
         router.push('/admin/posts');
       }
     } catch (error) {
       console.error('Error fetching post:', error);
-      alert('Error al cargar el post');
+      alert(t('messages.loadError'));
       router.push('/admin/posts');
     } finally {
       setLoadingPost(false);
@@ -122,11 +125,11 @@ function EditPostContent() {
         router.push('/admin/posts');
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.error || 'Error al actualizar el post'}`);
+        alert(`Error: ${errorData.error || t('messages.updateError')}`);
       }
     } catch (error) {
       console.error('Error updating post:', error);
-      alert('Error al actualizar el post');
+      alert(t('messages.updateError'));
     } finally {
       setLoading(false);
     }
@@ -156,13 +159,13 @@ function EditPostContent() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-heading text-primary">
-            Editar Post
+            {t('forms.editPost')}
           </h1>
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() => router.back()}
           >
-            Cancelar
+            {t('forms.cancel')}
           </Button>
         </div>
 
@@ -174,7 +177,7 @@ function EditPostContent() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Título *
+                      {t('forms.title')} *
                     </label>
                     <input
                       type="text"
@@ -183,13 +186,13 @@ function EditPostContent() {
                       value={formData.title}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Ingresa el título del post"
+                      placeholder={t('forms.titlePlaceholder')}
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Excerpt *
+                      {t('forms.excerpt')} *
                     </label>
                     <textarea
                       name="excerpt"
@@ -198,13 +201,13 @@ function EditPostContent() {
                       onChange={handleChange}
                       rows={3}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Breve descripción del post"
+                      placeholder={t('forms.excerptPlaceholder')}
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      URL de Imagen
+                      {t('forms.imageUrl')}
                     </label>
                     <input
                       type="url"
@@ -212,7 +215,7 @@ function EditPostContent() {
                       value={formData.imageUrl}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="https://example.com/image.jpg"
+                      placeholder={t('forms.imageUrlPlaceholder')}
                     />
                   </div>
                 </div>
@@ -221,7 +224,7 @@ function EditPostContent() {
               <Card className="p-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Contenido *
+                    {t('forms.content')} *
                   </label>
                   <div className="border border-gray-300 rounded-md">
                     <MDEditor
@@ -241,12 +244,12 @@ function EditPostContent() {
             <div className="space-y-6">
               <Card className="p-6">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Configuración
+                  {t('forms.configuration')}
                 </h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Categoría *
+                      {t('forms.category')} *
                     </label>
                     <select
                       name="categoryId"
@@ -255,7 +258,7 @@ function EditPostContent() {
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     >
-                      <option value="">Selecciona una categoría</option>
+                      <option value="">{t('forms.selectCategory')}</option>
                       {categories.map((category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}
@@ -266,7 +269,7 @@ function EditPostContent() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Estado de Publicación
+                      {t('forms.publishStatus')}
                     </label>
                     <select
                       name="status"
@@ -274,13 +277,13 @@ function EditPostContent() {
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     >
-                      <option value="DRAFT">🟡 Borrador (No visible al público)</option>
-                      <option value="PUBLISHED">🟢 Publicado (Visible al público)</option>
+                      <option value="DRAFT">{t('forms.draftStatus')}</option>
+                      <option value="PUBLISHED">{t('forms.publishedStatus')}</option>
                     </select>
                     <div className="mt-2 text-xs text-gray-500">
                       {formData.status === 'PUBLISHED' 
-                        ? '✅ Este post será visible inmediatamente en el blog público' 
-                        : '⚠️ Este post solo será visible en el panel de administración'
+                        ? t('forms.publishedNote')
+                        : t('forms.draftNote')
                       }
                     </div>
                   </div>
@@ -295,21 +298,21 @@ function EditPostContent() {
                     className="w-full"
                     disabled={loading}
                   >
-                    {loading ? 'Actualizando...' : (
+                    {loading ? t('forms.updating') : (
                       formData.status === 'PUBLISHED' 
-                        ? '📢 Actualizar y Publicar' 
-                        : '💾 Actualizar como Borrador'
+                        ? t('forms.updateAndPublish')
+                        : t('forms.updateAsDraft')
                     )}
                   </Button>
                   
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="secondary"
                     className="w-full"
                     onClick={() => setFormData({...formData, status: 'DRAFT'})}
                     disabled={loading}
                   >
-                    💾 Guardar como Borrador
+                    {t('forms.saveAsDraft')}
                   </Button>
                 </div>
               </Card>

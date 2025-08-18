@@ -1,6 +1,6 @@
 'use client';
 
-const React = require('react');
+import React from 'react';
 
 export default function HomePage() {
   return React.createElement('div', { className: 'container mx-auto p-8' }, 

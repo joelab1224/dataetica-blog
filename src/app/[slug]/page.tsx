@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -12,7 +13,7 @@ import Card from '@/components/ui/Card';
 import MainNavigation from '@/components/navigation/MainNavigation';
 import Breadcrumb from '@/components/navigation/Breadcrumb';
 import ReadingProgress from '@/components/ui/ReadingProgress';
-import { LoadingError, NotFoundError } from '@/components/ui/ErrorState';
+import { LoadingError } from '@/components/ui/ErrorState';
 
 interface BlogPost {
   id: string;
@@ -183,10 +184,11 @@ export default function BlogPostPage() {
       {/* Featured Image */}
       {post.featuredImage && (
         <div className="relative h-64 md:h-96 overflow-hidden">
-          <img 
+          <Image 
             src={post.featuredImage} 
             alt={post.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
       )}

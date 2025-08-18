@@ -1,0 +1,204 @@
+{
+  "title": "DataÉtica Blog",
+  "tagline": "Explorando la ética en la era digital",
+  "description": "Navegamos juntos el impacto de la tecnología en nuestras vidas, analizando cómo las decisiones digitales moldean nuestra sociedad y construimos un futuro más consciente.",
+  "hero": {
+    "badge": "Investigación en Ética Digital",
+    "title": "Navegando el",
+    "titleHighlight": "futuro digital",
+    "titleEnd": "con ética",
+    "subtitle": "Exploramos cómo la tecnología moldea nuestra sociedad y construimos un futuro más consciente a través del análisis crítico y la reflexión ética.",
+    "exploreArticles": "Explorar Artículos",
+    "viewTopics": "Ver Temas",
+    "socialProof": "Leído por profesionales tech",
+    "updatedWeekly": "Actualizado semanalmente",
+    "featuredArticle": "Artículo Destacado",
+    "originalContent": "Contenido Original",
+    "independentResearch": "Investigación independiente",
+    "valueProps": {
+      "aiAnalysis": "Análisis crítico de IA",
+      "privacyData": "Privacidad y datos",
+      "ethicalFramework": "Marco ético tecnológico"
+    }
+  },
+  "articles": {
+    "title": "Todos los Artículos",
+    "exploreContent": "Explora Nuestro Contenido",
+    "useFilters": "Utiliza los filtros para encontrar exactamente lo que buscas",
+    "showing": "Mostrando {{start}}-{{end}} de {{total}} artículos",
+    "noArticles": "No hay artículos disponibles en este momento",
+    "noMatchingArticles": "No se encontraron artículos que coincidan con los filtros seleccionados.",
+    "seeAllArticles": "Ver todos los artículos",
+    "readingTime": "{{minutes}} min de lectura",
+    "publishedOn": "Publicado el {{date}}",
+    "by": "por",
+    "tags": "Etiquetas",
+    "relatedArticles": "Artículos relacionados",
+    "shareArticle": "Compartir artículo",
+    "shareOn": "Compartir en {{platform}}"
+  },
+  "categories": {
+    "title": "Categorías",
+    "subtitle": "Explora nuestros temas principales",
+    "allCategories": "Todas las categorías",
+    "articlesInCategory": "{{count}} artículo en {{category}}",
+    "articlesInCategory_plural": "{{count}} artículos en {{category}}"
+  },
+  "search": {
+    "placeholder": "Buscar artículos...",
+    "searchBy": "Buscar por:",
+    "title": "Título",
+    "content": "Contenido",
+    "author": "Autor",
+    "noResults": "No se encontraron artículos para \"{{query}}\"",
+    "resultsFor": "Resultados para \"{{query}}\"",
+    "searchResults": "{{count}} resultado",
+    "searchResults_plural": "{{count}} resultados"
+  },
+  "filters": {
+    "filterBy": "Filtrar por",
+    "category": "Categoría",
+    "date": "Fecha",
+    "newest": "Más recientes",
+    "oldest": "Más antiguos",
+    "popular": "Populares",
+    "clearFilters": "Limpiar filtros",
+    "applyFilters": "Aplicar filtros",
+    "activeFilters": "Filtros activos"
+  },
+  "stats": {
+    "totalArticles": "Total de artículos",
+    "totalCategories": "Total de categorías",
+    "recentArticles": "Artículos recientes",
+    "thisMonth": "Este mes",
+    "thisWeek": "Esta semana",
+    "ourImpact": "Nuestro Impacto",
+    "buildingCommunity": "Construyendo una comunidad consciente sobre la ética digital",
+    "articlesPublished": "Artículos Publicados",
+    "deepReflections": "Reflexiones profundas sobre ética digital",
+    "topicsCovered": "Temas Cubiertos",
+    "fromAiToPrivacy": "Desde IA hasta privacidad de datos",
+    "foundingYear": "Año de Fundación",
+    "committedToEthics": "Comprometidos con la ética tecnológica"
+  },
+  "footer": {
+    "links": "Enlaces",
+    "contact": "Contacto",
+    "copyright": "© {{year}} DataÉtica. Todos los derechos reservados."
+  },
+  "about": {
+    "title": "DataÉtica: Navegando la Ética Digital",
+    "subtitle": "Exploramos el impacto de la tecnología en nuestra sociedad, analizando cómo las decisiones digitales moldean nuestro futuro y construimos un mundo más consciente y ético.",
+    "sections": {
+      "focusAreas": {
+        "title": "Nuestras Áreas de Reflexión",
+        "subtitle": "Navegamos la compleja intersección entre transformación digital, capacidad crítica y construcción social para entender cómo la tecnología redefine la condición humana.",
+        "areas": {
+          "digitalTransformation": {
+            "title": "Digitalización Consciente",
+            "description": "Exploramos cómo la transformación digital redefine la experiencia humana y las estructuras sociales.",
+            "details": "Analizamos la tensión entre eficiencia tecnológica y preservación de valores humanos fundamentales."
+          },
+          "digitalLiteracy": {
+            "title": "Alfabetización Digital",
+            "description": "Investigamos la brecha entre conocimiento técnico y comprensión crítica de la tecnología.",
+            "details": "Examinamos cómo la capacidad de \"leer\" el mundo digital determina la participación social."
+          },
+          "socialCohesion": {
+            "title": "Cohesión Social",
+            "description": "Estudiamos cómo la mediación tecnológica afecta el tejido social y las relaciones humanas.",
+            "details": "Reflexionamos sobre la construcción de comunidades en espacios híbridos físico-digitales."
+          }
+        }
+      },
+      "values": {
+        "title": "Nuestros Fundamentos",
+        "subtitle": "Los principios que guían nuestro trabajo y nuestra visión del futuro digital.",
+        "mission": {
+          "title": "MISIÓN",
+          "items": [
+            "Promover la reflexión crítica sobre tecnología",
+            "Generar conciencia sobre decisiones digitales",
+            "Construir un futuro tecnológico más ético"
+          ]
+        },
+        "vision": {
+          "title": "VISIÓN",
+          "items": [
+            "Sociedad que comprende el impacto tecnológico",
+            "Ciudadanos empoderados digitalmente",
+            "Tecnología al servicio del bienestar humano"
+          ]
+        },
+        "values": {
+          "title": "VALORES",
+          "items": [
+            "Transparencia en el análisis",
+            "Rigor académico e investigación",
+            "Accesibilidad del conocimiento"
+          ]
+        }
+      },
+      "whyDataetica": {
+        "title": "¿Por Qué DataÉtica?",
+        "subtitle": "Vivimos en un momento crucial de la historia humana.",
+        "reasons": {
+          "automatedDecisions": {
+            "title": "Decisiones Automatizadas",
+            "description": "Vivimos en una era donde la tecnología toma decisiones que afectan nuestras vidas diariamente: qué vemos, qué oportunidades recibimos, cómo somos evaluados."
+          },
+          "understandingGap": {
+            "title": "Brecha de Comprensión",
+            "description": "Muchas personas no comprenden cómo funcionan los algoritmos que los rodean, creando una desconexión peligrosa entre la tecnología y la sociedad."
+          },
+          "knowledgeDemocratization": {
+            "title": "Democratización del Conocimiento",
+            "description": "Creamos contenido accesible para democratizar el conocimiento sobre ética digital, haciendo que conceptos complejos sean comprensibles para todos."
+          },
+          "consciousFuture": {
+            "title": "Futuro Consciente",
+            "description": "Fomentamos el pensamiento crítico y la participación ciudadana para construir un futuro tecnológico más consciente y ético."
+          }
+        },
+        "quote": "\"La ética digital no es solo responsabilidad de tecnólogos, es responsabilidad de todos nosotros como ciudadanos de la era digital.\"",
+        "quoteAuthor": "— Filosofía DataÉtica"
+      },
+      "approaches": {
+        "title": "Nuestros Enfoques",
+        "subtitle": "Combinamos rigor académico con accesibilidad para crear impacto real.",
+        "research": {
+          "title": "INVESTIGACIÓN",
+          "items": [
+            "Análisis de casos reales",
+            "Estudios de impacto social",
+            "Revisión de políticas digitales"
+          ]
+        },
+        "education": {
+          "title": "EDUCACIÓN",
+          "items": [
+            "Artículos accesibles",
+            "Guías prácticas",
+            "Recursos educativos"
+          ]
+        },
+        "community": {
+          "title": "COMUNIDAD",
+          "items": [
+            "Fomento del diálogo",
+            "Participación ciudadana",
+            "Colaboración interdisciplinaria"
+          ]
+        }
+      },
+      "joinConversation": {
+        "title": "Únete a la Conversación",
+        "subtitle": "La construcción de un futuro digital ético requiere la participación de todos. Cada voz, cada perspectiva, cada pregunta es valiosa en esta conversación crucial.",
+        "message": "\"El futuro no es algo que nos sucede, es algo que creamos juntos. Participa en la construcción de un mundo digital más justo y consciente.\"",
+        "exploreArticles": "Explorar Artículos",
+        "knowledgeTest": "Test de Conocimiento",
+        "collaborateText": "¿Tienes preguntas o quieres colaborar?"
+      }
+    }
+  }
+}

@@ -1,10 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
 import prisma from '@/lib/prisma';
+import { rateLimit, getClientIP } from '@/lib/rateLimit';
+import { createErrorResponse, logAdminAction } from '@/lib/errorHandler';
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting por IP
+    const clientIP = getClientIP(request);
+    const rateLimitResult = rateLimit(`login-${clientIP}`, {
+      windowMs: 15 * 60 * 1000, // 15 minutos
+      maxRequests: 5 // 5 intentos por IP cada 15 minutos
+    });
+    
+    if (!rateLimitResult.allowed) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      return NextResponse.json(
+        { 
+          error: 'Too many login attempts. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { email, password } = body;
     
@@ -37,16 +57,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { 
-        userId: user.id, 
-        email: user.email, 
-        role: user.role 
-      },
-      process.env.JWT_SECRET!,
-      { expiresIn: '7d' }
-    );
+    // Generate JWT token using jose
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+    const token = await new SignJWT({ 
+      userId: user.id, 
+      email: user.email, 
+      role: user.role 
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('7d')
+      .sign(secret);
 
     // Set cookie
     const response = NextResponse.json({
@@ -62,18 +83,19 @@ export async function POST(request: NextRequest) {
     console.log('Login API: Setting token cookie');
     response.cookies.set('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production', // Only secure in production
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: '/' // Allow cookie to be accessible from all paths
     });
 
     console.log('Login API: Token cookie set successfully');
+    
+    // Log acción administrativa
+    logAdminAction('USER_LOGIN', { userId: user.id, email: user.email, ip: clientIP });
+    
     return response;
   } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return createErrorResponse(error, 'Login failed. Please try again.', 500);
   }
 }

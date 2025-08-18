@@ -2,6 +2,7 @@
 
 import BlogPostCard from './BlogPostCard';
 import Button from './ui/Button';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface BlogPost {
   id: string;
@@ -30,16 +31,17 @@ export default function FeaturedArticlesSection({
   onViewAllClick, 
   className = '' 
 }: FeaturedArticlesSectionProps) {
+  const { t } = useClientTranslation(['blog', 'common', 'navigation']);
   const featuredPosts = posts.slice(0, 3);
 
   return (
     <section className={`container padding-responsive py-16 ${className}`}>
       <div className="text-center mb-12">
         <h2 className="text-section-header text-primary mb-4 font-heading">
-          Artículos Destacados
+          {t('hero.featuredArticle')}s
         </h2>
         <p className="text-body text-secondary max-w-2xl mx-auto">
-          Descubre nuestras reflexiones más recientes sobre ética digital y transformación tecnológica
+          {t('hero.subtitle')}
         </p>
       </div>
       
@@ -55,7 +57,7 @@ export default function FeaturedArticlesSection({
       ) : (
         <div className="text-center py-12">
           <div className="text-secondary text-section-header space-y-4">
-            <p className="font-body">Próximamente publicaremos nuestros primeros artículos.</p>
+            <p className="font-body">{t('articles.noArticles')}</p>
             <div className="text-4xl opacity-50">📚</div>
           </div>
         </div>
@@ -68,7 +70,7 @@ export default function FeaturedArticlesSection({
           onClick={onViewAllClick}
           className="font-semibold"
         >
-          Ver Todos los Artículos
+          {t('common:viewAll')} {t('navigation:articles')}
         </Button>
       </div>
     </section>

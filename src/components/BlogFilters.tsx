@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Button from './ui/Button';
 import Tag from './ui/Tag';
 import Card from './ui/Card';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface Category {
   id: string;
@@ -18,6 +19,7 @@ interface BlogFiltersProps {
 }
 
 export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
+  const { t } = useClientTranslation('blog');
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -105,14 +107,14 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
         {/* Search */}
         <div className="flex-1">
           <label className="block text-nav-card text-primary mb-2 font-semibold">
-            Buscar artículos
+            {t('search.placeholder')}
           </label>
           <div className="relative">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="Buscar por título, contenido..."
+              placeholder={t('search.placeholder')}
               className="w-full pl-10 pr-4 py-3 border border-subtle rounded-large focus-purple transition-all duration-200"
             />
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -126,7 +128,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
         {/* Category Filter */}
         <div className="lg:w-64">
           <label className="block text-nav-card text-primary mb-2 font-semibold">
-            Categoría
+            {t('filters.category')}
           </label>
           <select
             value={selectedCategory}
@@ -134,7 +136,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
             disabled={loading}
             className="w-full px-4 py-3 border border-subtle rounded-large focus-purple transition-all duration-200 bg-white"
           >
-            <option value="all">Todas las categorías</option>
+            <option value="all">{t('categories.allCategories')}</option>
             {categories.map((category) => (
               <option key={category.id} value={category.slug}>
                 {category.name} ({category.postCount})
@@ -151,7 +153,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
               variant="secondary"
               size="sm"
             >
-              Limpiar filtros
+              {t('filters.clearFilters')}
             </Button>
           </div>
         )}
@@ -160,7 +162,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
       {/* Active Filters Display */}
       {hasActiveFilters && (
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <span className="text-nav-card text-secondary font-medium">Filtros activos:</span>
+          <span className="text-nav-card text-secondary font-medium">{t('filters.activeFilters')}:</span>
           
           {searchTerm && (
             <Tag
@@ -172,7 +174,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
                 updateFilters({ category: selectedCategory !== 'all' ? selectedCategory : undefined });
               }}
             >
-              Búsqueda: &ldquo;{searchTerm}&rdquo;
+              {t('search.searchBy')}: &ldquo;{searchTerm}&rdquo;
             </Tag>
           )}
           
@@ -186,7 +188,7 @@ export default function BlogFilters({ onFiltersChange }: BlogFiltersProps) {
                 updateFilters({ search: searchTerm || undefined });
               }}
             >
-              Categoría: {categories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
+              {t('filters.category')}: {categories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
             </Tag>
           )}
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import AuthGuard from '@/components/auth/AuthGuard';
 import AdminLayout from '@/components/admin/AdminLayout';
 import Card from '@/components/ui/Card';
@@ -10,6 +11,11 @@ interface User {
   name: string;
   email: string;
   role: string;
+}
+
+interface Post {
+  id: string;
+  status: 'PUBLISHED' | 'DRAFT';
 }
 
 function AdminDashboardContent() {
@@ -44,8 +50,8 @@ function AdminDashboardContent() {
           setStats({
             totalPosts: posts.length,
             totalCategories: categories.length,
-            publishedPosts: posts.filter((p: any) => p.status === 'PUBLISHED').length,
-            draftPosts: posts.filter((p: any) => p.status === 'DRAFT').length,
+            publishedPosts: posts.filter((p: Post) => p.status === 'PUBLISHED').length,
+            draftPosts: posts.filter((p: Post) => p.status === 'DRAFT').length,
           });
         }
       } catch (error) {
@@ -116,29 +122,29 @@ function AdminDashboardContent() {
             Acciones Rápidas
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <a
+            <Link
               href="/admin/posts/create"
               className="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors text-center"
             >
               <div className="text-2xl mb-2">✏️</div>
               <div className="font-medium text-purple-700">Crear Post</div>
-            </a>
+            </Link>
             
-            <a
+            <Link
               href="/admin/posts"
               className="block p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors text-center"
             >
               <div className="text-2xl mb-2">📢</div>
               <div className="font-medium text-orange-700">Publicar/Despublicar</div>
-            </a>
+            </Link>
             
-            <a
+            <Link
               href="/admin/categories"
               className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors text-center"
             >
               <div className="text-2xl mb-2">📁</div>
               <div className="font-medium text-blue-700">Gestionar Categorías</div>
-            </a>
+            </Link>
             
             <a
               href="/"

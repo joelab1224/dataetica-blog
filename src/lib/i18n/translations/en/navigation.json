@@ -1,0 +1,29 @@
+{
+  "home": "Home",
+  "about": "About us",
+  "blog": "Blog",
+  "articles": "Articles",
+  "categories": "Categories",
+  "contact": "Contact",
+  "admin": "Administration",
+  "dashboard": "Dashboard",
+  "backToBlog": "Back to blog",
+  "menu": "Menu",
+  "menuItems": {
+    "articles": "Articles",
+    "topics": "Topics",
+    "about": "About Us",
+    "knowledgeTest": "Knowledge Test"
+  },
+  "menuDescriptions": {
+    "articles": "Explore content",
+    "topics": "Browse categories",
+    "about": "Learn about our mission",
+    "knowledgeTest": "Test your learning"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "about": "About",
+    "article": "Article"
+  }
+}

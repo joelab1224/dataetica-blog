@@ -203,7 +203,7 @@ function CategoriesManagementContent() {
                 </Button>
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   onClick={handleCancel}
                 >
                   Cancelar
@@ -252,7 +252,7 @@ function CategoriesManagementContent() {
                   <div className="flex items-center space-x-2 ml-4">
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="secondary"
                       onClick={() => handleEdit(category)}
                     >
                       Editar
@@ -260,7 +260,7 @@ function CategoriesManagementContent() {
                     
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="secondary"
                       onClick={() => handleDelete(category.id)}
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                       disabled={category._count.posts > 0}

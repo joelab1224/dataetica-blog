@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { withAdminAuth, logAdminAction, type AuthenticatedUser } from '@/lib/apiAuth';
 
 // GET /api/categories/[id] - Get single category
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const resolvedParams = await params;
     const category = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         _count: {
           select: {
@@ -35,18 +37,20 @@ export async function GET(
   }
 }
 
-// PUT /api/categories/[id] - Update category
-export async function PUT(
+// PUT /api/categories/[id] - Update category (Protected)
+const updateCategoryHandler = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  user: AuthenticatedUser,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   try {
+    const resolvedParams = await params;
     const body = await request.json();
     const { name, description } = body;
 
     // Check if category exists
     const existingCategory = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!existingCategory) {
@@ -68,7 +72,7 @@ export async function PUT(
       const slugExists = await prisma.category.findFirst({
         where: {
           slug,
-          id: { not: params.id },
+          id: { not: resolvedParams.id },
         },
       });
 
@@ -80,7 +84,7 @@ export async function PUT(
       }
     }
 
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (name !== undefined) {
       updateData.name = name;
       updateData.slug = slug;
@@ -88,7 +92,7 @@ export async function PUT(
     if (description !== undefined) updateData.description = description || null;
 
     const category = await prisma.category.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: updateData,
       include: {
         _count: {
@@ -98,6 +102,13 @@ export async function PUT(
         },
       },
     });
+
+    // Log admin action for audit trail
+    logAdminAction('CATEGORY_UPDATE', user, {
+      categoryId: resolvedParams.id,
+      name: category.name,
+      changes: updateData
+    }, request);
 
     return NextResponse.json(category);
   } catch (error) {
@@ -109,15 +120,17 @@ export async function PUT(
   }
 }
 
-// DELETE /api/categories/[id] - Delete category
-export async function DELETE(
+// DELETE /api/categories/[id] - Delete category (Protected)
+const deleteCategoryHandler = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  user: AuthenticatedUser,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   try {
+    const resolvedParams = await params;
     // Check if category exists
     const existingCategory = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       include: {
         _count: {
           select: {
@@ -143,8 +156,15 @@ export async function DELETE(
     }
 
     await prisma.category.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
+
+    // Log admin action for audit trail
+    logAdminAction('CATEGORY_DELETE', user, {
+      categoryId: resolvedParams.id,
+      name: existingCategory.name,
+      postCount: existingCategory._count.posts
+    }, request);
 
     return NextResponse.json({ message: 'Category deleted successfully' });
   } catch (error) {
@@ -154,4 +174,8 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+};
+
+// Export secured handlers
+export const PUT = withAdminAuth(updateCategoryHandler);
+export const DELETE = withAdminAuth(deleteCategoryHandler);

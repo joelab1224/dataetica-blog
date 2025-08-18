@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Card from './ui/Card';
 import Button from './ui/Button';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface Category {
   id: string;
@@ -31,6 +32,8 @@ const getTopicIcon = (categoryName: string): string => {
 };
 
 export default function TopicsSection({ categories, className = '' }: TopicsSectionProps) {
+  const { t } = useClientTranslation(['blog', 'navigation']);
+  
   if (categories.length === 0) {
     return null;
   }
@@ -39,10 +42,10 @@ export default function TopicsSection({ categories, className = '' }: TopicsSect
     <section className={`container padding-responsive py-16 ${className}`}>
       <div className="text-center mb-12">
         <h2 className="text-section-header text-primary mb-4 font-heading">
-          Explora por Temas
+          {t('categories.title')}
         </h2>
         <p className="text-body text-secondary max-w-2xl mx-auto">
-          Navega a través de nuestras diferentes áreas de reflexión sobre ética digital
+          {t('categories.subtitle')}
         </p>
       </div>
       
@@ -57,10 +60,10 @@ export default function TopicsSection({ categories, className = '' }: TopicsSect
                 {category.name}
               </h3>
               <p className="text-xs text-secondary font-body">
-                {category.postCount === 1 
-                  ? `${category.postCount} artículo` 
-                  : `${category.postCount} artículos`
-                }
+                {t('categories.articlesInCategory', { 
+                  count: category.postCount, 
+                  category: category.name 
+                })}
               </p>
               {category.description && (
                 <p className="text-xs text-secondary font-body mt-2 line-clamp-2">
@@ -76,7 +79,7 @@ export default function TopicsSection({ categories, className = '' }: TopicsSect
         <div className="text-center mt-8">
           <Link href="/categories">
             <Button variant="secondary" size="md">
-              Ver Todas las Categorías
+              {t('categories.allCategories')}
             </Button>
           </Link>
         </div>

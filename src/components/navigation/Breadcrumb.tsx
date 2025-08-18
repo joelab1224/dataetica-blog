@@ -26,7 +26,7 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
     ];
 
     let currentPath = '';
-    pathSegments.forEach((segment, index) => {
+    pathSegments.forEach((segment) => {
       currentPath += `/${segment}`;
       
       // Convert segment to readable label
