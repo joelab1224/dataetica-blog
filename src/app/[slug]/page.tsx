@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { marked } from 'marked';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
@@ -39,6 +40,19 @@ export default function BlogPostPage() {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Parse markdown content to HTML
+  const parsedContent = useMemo(() => {
+    if (!post?.content) return '';
+    
+    // Configure marked options for better rendering
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+    });
+    
+    return marked(post.content);
+  }, [post?.content]);
 
   // Fetch post from the API
   useEffect(() => {
@@ -204,7 +218,7 @@ export default function BlogPostPage() {
                 fontFamily: 'var(--font-poppins)',
                 fontWeight: '300'
               }}
-              dangerouslySetInnerHTML={{ __html: post.content }} 
+              dangerouslySetInnerHTML={{ __html: parsedContent }} 
             />
             
             {/* Article Footer */}

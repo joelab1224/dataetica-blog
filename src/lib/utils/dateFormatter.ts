@@ -1,6 +1,4 @@
-import { type Locale } from '@/lib/i18n/config';
-
-export const formatDate = (date: string | Date, locale: Locale, options?: Intl.DateTimeFormatOptions) => {
+export const formatDate = (date: string | Date, options?: Intl.DateTimeFormatOptions) => {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   
   const defaultOptions: Intl.DateTimeFormatOptions = {
@@ -9,20 +7,17 @@ export const formatDate = (date: string | Date, locale: Locale, options?: Intl.D
     year: 'numeric',
   };
   
-  const localeMap = {
-    es: 'es-ES',
-    en: 'en-US',
-  };
-  
-  return dateObj.toLocaleDateString(localeMap[locale], { ...defaultOptions, ...options });
+  // Always use English locale
+  return dateObj.toLocaleDateString('en-US', { ...defaultOptions, ...options });
 };
 
-export const formatRelativeTime = (date: string | Date, locale: Locale) => {
+export const formatRelativeTime = (date: string | Date) => {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000);
   
-  const rtf = new Intl.RelativeTimeFormat(locale === 'es' ? 'es-ES' : 'en-US', {
+  // Always use English locale
+  const rtf = new Intl.RelativeTimeFormat('en-US', {
     numeric: 'auto'
   });
   

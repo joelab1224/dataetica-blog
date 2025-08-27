@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface SearchBarProps {
   value?: string;
@@ -13,10 +14,11 @@ interface SearchBarProps {
 export default function SearchBar({ 
   value = '',
   onChange,
-  placeholder = 'Buscar...',
+  placeholder,
   className = '',
   disabled = false
 }: SearchBarProps) {
+  const { t } = useClientTranslation('blog');
   const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ export default function SearchBar({
   return (
     <div className={`search-bar ${className}`}>
       <label htmlFor="search" className="search-bar-label">
-        Buscar artículos
+        {t('search.placeholder')}
       </label>
       <div className="search-bar-container">
         <input
@@ -38,7 +40,7 @@ export default function SearchBar({
           id="search"
           value={inputValue}
           onChange={handleChange}
-          placeholder={placeholder}
+          placeholder={placeholder || t('search.placeholder')}
           disabled={disabled}
           className="search-bar-input"
         />

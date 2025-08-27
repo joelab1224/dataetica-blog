@@ -15,7 +15,6 @@ import StatisticsSection from '@/components/StatisticsSection';
 import TopicsSection from '@/components/TopicsSection';
 import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 import { formatDate } from '@/lib/utils/dateFormatter';
-import { type Locale } from '@/lib/i18n/config';
 
 interface BlogPost {
   id: string;
@@ -50,7 +49,7 @@ interface Category {
 }
 
 function HomePageContent(): JSX.Element {
-  const { t, currentLanguage } = useClientTranslation(['blog', 'common']);
+  const { t } = useClientTranslation(['blog', 'common']);
   const searchParams = useSearchParams();
   
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -336,7 +335,7 @@ function HomePageContent(): JSX.Element {
                           <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">{t('hero.featuredArticle')}</span>
                         </div>
                         <div className="text-xs text-gray-500">
-                          {formatDate(posts[0].publishedAt, currentLanguage as Locale, {
+                          {formatDate(posts[0].publishedAt, {
                             month: 'short',
                             day: 'numeric'
                           })}

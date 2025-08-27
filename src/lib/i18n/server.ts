@@ -1,7 +1,7 @@
 import { createInstance } from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
-import { defaultLocale, type Locale } from './config';
+import { type Locale } from './config';
 
 const initI18next = async (lng: Locale, ns: string | string[]) => {
   const i18nInstance = createInstance();
@@ -14,8 +14,8 @@ const initI18next = async (lng: Locale, ns: string | string[]) => {
     )
     .init({
       lng,
-      fallbackLng: defaultLocale,
-      supportedLngs: ['es', 'en'],
+      fallbackLng: 'en',
+      supportedLngs: ['en'],
       defaultNS: 'common',
       fallbackNS: 'common',
       ns,
@@ -26,7 +26,7 @@ const initI18next = async (lng: Locale, ns: string | string[]) => {
   return i18nInstance;
 };
 
-export async function getTranslation(lng: Locale = defaultLocale, ns: string | string[] = 'common') {
+export async function getTranslation(lng: Locale = 'en', ns: string | string[] = 'common') {
   const i18nextInstance = await initI18next(lng, ns);
   return {
     t: i18nextInstance.getFixedT(lng, Array.isArray(ns) ? ns[0] : ns),
@@ -34,7 +34,7 @@ export async function getTranslation(lng: Locale = defaultLocale, ns: string | s
   };
 }
 
-export async function getMultipleTranslations(lng: Locale = defaultLocale, namespaces: string[]) {
+export async function getMultipleTranslations(lng: Locale = 'en', namespaces: string[]) {
   const i18nextInstance = await initI18next(lng, namespaces);
   const translations: { [key: string]: ReturnType<typeof i18nextInstance.getFixedT> } = {};
   

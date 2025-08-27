@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface HeaderProps {
@@ -55,9 +54,9 @@ export default function Header({
             </Link>
           </div>
           
-          {/* Right side - Language switcher */}
+          {/* Right side - placeholder to keep layout consistent */}
           <div className="flex items-center">
-            <LanguageSwitcher variant="toggle" showLabels={false} />
+            {/* Language switcher removed: English-only site */}
           </div>
         </div>
       </div>

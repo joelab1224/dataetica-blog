@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = env("DATABASE_PROVIDER") == "postgresql" ? "postgresql" : "sqlite"
-  url      = env("DATABASE_URL") != "" ? env("DATABASE_URL") : "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -15,46 +15,41 @@ model User {
   role      Role     @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
   posts     Post[]
 }
 
 model Post {
-  id            String     @id @default(uuid())
+  id            String         @id @default(uuid())
   title         String
-  slug          String     @unique
+  slug          String         @unique
   content       String
   excerpt       String?
   featuredImage String?
-  status        PostStatus @default(DRAFT)
+  status        PostStatus     @default(DRAFT)
   publishedAt   DateTime?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   authorId      String
-  author        User       @relation(fields: [authorId], references: [id])
-  
+  author        User           @relation(fields: [authorId], references: [id])
   categories    PostCategory[]
 }
 
 model Category {
-  id          String   @id @default(uuid())
-  name        String   @unique
-  slug        String   @unique
+  id          String         @id @default(uuid())
+  name        String         @unique
+  slug        String         @unique
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   posts       PostCategory[]
 }
 
 model PostCategory {
   postId     String
   categoryId String
-  
-  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   @@id([postId, categoryId])
 }
 

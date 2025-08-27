@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface BreadcrumbItem {
   label: string;
@@ -15,6 +16,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
   const pathname = usePathname();
+  const { t } = useClientTranslation('navigation');
 
   // Auto-generate breadcrumb items if not provided
   const getBreadcrumbItems = (): BreadcrumbItem[] => {
@@ -22,7 +24,7 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
 
     const pathSegments = pathname.split('/').filter(segment => segment !== '');
     const breadcrumbItems: BreadcrumbItem[] = [
-      { label: 'Inicio', href: '/' }
+      { label: t('breadcrumb.home'), href: '/' }
     ];
 
     let currentPath = '';
@@ -32,19 +34,19 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
       // Convert segment to readable label
       let label = segment;
       if (segment === 'admin') {
-        label = 'Administración';
+        label = t('admin');
       } else if (segment === 'posts') {
-        label = 'Artículos';
+        label = t('articles');
       } else if (segment === 'categories') {
-        label = 'Categorías';
+        label = t('categories');
       } else if (segment === 'create') {
-        label = 'Crear';
+        label = 'Create';
       } else if (segment === 'edit') {
-        label = 'Editar';
+        label = 'Edit';
       } else if (segment === 'login') {
-        label = 'Iniciar Sesión';
+        label = 'Login';
       } else if (segment === 'dashboard') {
-        label = 'Panel';
+        label = t('dashboard');
       } else {
         // Capitalize first letter and replace hyphens with spaces
         label = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');

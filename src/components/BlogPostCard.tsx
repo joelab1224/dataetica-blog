@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import Card from './ui/Card';
 import Tag from './ui/Tag';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface BlogPost {
   id: string;
@@ -28,6 +29,7 @@ interface BlogPostCardProps {
 }
 
 export default function BlogPostCard({ post }: BlogPostCardProps) {
+  const { t } = useClientTranslation('blog');
   return (
     <Card variant="elevated" className="group transition-transform duration-200 hover:-translate-y-1">
       {post.featuredImage && (
@@ -77,11 +79,11 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
         
         {/* Meta */}
         <div className="flex-center-between text-metadata text-secondary">
-          <span className="font-medium">Por {post.author.name}</span>
+          <span className="font-medium">{t('articles.by')} {post.author.name}</span>
           <time dateTime={post.publishedAt} className="font-body">
             {formatDistanceToNow(new Date(post.publishedAt), { 
               addSuffix: true,
-              locale: es 
+              locale: enUS 
             })}
           </time>
         </div>
@@ -92,7 +94,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
             href={`/${post.slug}`}
             className="flex-center text-nav-card font-semibold text-gray-700 hover-purple transition-colors group"
           >
-            Leer más 
+            Read more
             <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

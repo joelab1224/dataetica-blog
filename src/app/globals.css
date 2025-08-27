@@ -77,4 +77,170 @@
     font-family: var(--font-poppins);
     font-weight: 500;
   }
+  
+  /* Prose styles for markdown content */
+  .prose {
+    color: rgb(55 65 81);
+    max-width: 65ch;
+  }
+  
+  .prose h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: rgb(17 24 39);
+  }
+  
+  .prose h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    color: rgb(17 24 39);
+  }
+  
+  .prose h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgb(17 24 39);
+  }
+  
+  .prose h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: rgb(17 24 39);
+  }
+  
+  .prose p {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+  
+  .prose ul, .prose ol {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding-left: 1.625rem;
+  }
+  
+  .prose li {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+  }
+  
+  .prose li strong {
+    font-weight: 600;
+  }
+  
+  .prose blockquote {
+    font-style: italic;
+    font-weight: 500;
+    color: rgb(107 114 128);
+    border-left: 0.25rem solid rgb(229 231 235);
+    padding-left: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .prose hr {
+    border-color: rgb(229 231 235);
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .prose strong {
+    font-weight: 600;
+    color: rgb(17 24 39);
+  }
+  
+  .prose code {
+    color: rgb(17 24 39);
+    font-weight: 600;
+    font-size: 0.875rem;
+    background-color: rgb(243 244 246);
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+  }
+  
+  .prose pre {
+    color: rgb(229 231 235);
+    background-color: rgb(17 24 39);
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.7142857;
+    margin-top: 1.7142857em;
+    margin-bottom: 1.7142857em;
+    border-radius: 0.375rem;
+    padding: 0.8571429em 1.1428571em;
+  }
+  
+  .prose pre code {
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+    font-weight: 400;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+  }
+  
+  .prose-lg {
+    font-size: 1.125rem;
+    line-height: 1.7777778;
+  }
+  
+  .prose-lg h1 {
+    font-size: 2.6666667rem;
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 1.3333333rem;
+  }
+  
+  .prose-lg h2 {
+    font-size: 2.2222222rem;
+    line-height: 1.2;
+    margin-top: 1.7777778rem;
+    margin-bottom: 1.1111111rem;
+  }
+  
+  .prose-lg h3 {
+    font-size: 1.6666667rem;
+    line-height: 1.3333333;
+    margin-top: 1.7777778rem;
+    margin-bottom: 0.6666667rem;
+  }
+  
+  .prose-lg h4 {
+    margin-top: 1.7777778rem;
+    margin-bottom: 0.4444444rem;
+    line-height: 1.5555556;
+  }
+  
+  .prose-lg p {
+    margin-top: 1.3333333rem;
+    margin-bottom: 1.3333333rem;
+  }
+  
+  .prose-lg li {
+    margin-top: 0.6666667rem;
+    margin-bottom: 0.6666667rem;
+  }
+  
+  .prose-lg blockquote {
+    margin-top: 1.7777778rem;
+    margin-bottom: 1.7777778rem;
+    padding-left: 1rem;
+  }
 }
