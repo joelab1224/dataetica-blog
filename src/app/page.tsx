@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import Button from '@/components/ui/Button';
+import Pagination, { PaginationData } from '@/components/ui/Pagination';
 import MainNavigation from '@/components/navigation/MainNavigation';
 import EthicsIconPattern from '@/components/ui/EthicsIconPattern';
 import FeaturedArticlesSection from '@/components/FeaturedArticlesSection';
@@ -32,13 +33,6 @@ interface BlogPost {
   }>;
 }
 
-interface PaginationData {
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  totalPosts: number;
-  hasMore: boolean;
-}
 
 interface Category {
   id: string;
@@ -140,7 +134,19 @@ function HomePageContent(): JSX.Element {
   // Handle pagination
   const handlePageChange = (newPage: number) => {
     fetchPosts(newPage, filters);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Scroll to articles section instead of top of page
+    setTimeout(() => {
+      const articlesElement = document.getElementById('articles-section');
+      if (articlesElement) {
+        const elementTop = articlesElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementTop - 120; // Add padding from top for better UX
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   // Handle scroll to all articles
@@ -161,58 +167,6 @@ function HomePageContent(): JSX.Element {
     }, 100);
   };
 
-  // Render pagination
-  const renderPagination = () => {
-    if (pagination.totalPages <= 1) return null;
-
-    const pages = [];
-    const maxVisiblePages = 5;
-    
-    let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
-    const endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
-    
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <Button
-          key={i}
-          onClick={() => handlePageChange(i)}
-          variant={pagination.page === i ? 'primary' : 'secondary'}
-          size="sm"
-          className="mx-1"
-        >
-          {i}
-        </Button>
-      );
-    }
-
-    return (
-      <div className="flex justify-center items-center mt-12 space-x-2">
-        <Button
-          onClick={() => handlePageChange(pagination.page - 1)}
-          disabled={pagination.page === 1}
-          variant="secondary"
-          size="sm"
-        >
-          {t('common:previous')}
-        </Button>
-        
-        {pages}
-        
-        <Button
-          onClick={() => handlePageChange(pagination.page + 1)}
-          disabled={pagination.page === pagination.totalPages}
-          variant="secondary"
-          size="sm"
-        >
-          {t('common:next')}
-        </Button>
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -493,7 +447,11 @@ function HomePageContent(): JSX.Element {
               </div>
             )}
 
-            {renderPagination()}
+            <Pagination 
+              pagination={pagination}
+              onPageChange={handlePageChange}
+              isLoading={loading}
+            />
           </React.Fragment>
         )}
       </main>
