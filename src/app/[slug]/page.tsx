@@ -15,6 +15,7 @@ import MainNavigation from '@/components/navigation/MainNavigation';
 import Breadcrumb from '@/components/navigation/Breadcrumb';
 import ReadingProgress from '@/components/ui/ReadingProgress';
 import { LoadingError } from '@/components/ui/ErrorState';
+import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 
 interface BlogPost {
   id: string;
@@ -36,6 +37,7 @@ interface BlogPost {
 export default function BlogPostPage() {
   const params = useParams();
   const slug = params?.slug as string;
+  const { t } = useClientTranslation(['blog', 'navigation', 'common']);
   
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
@@ -151,7 +153,7 @@ export default function BlogPostPage() {
 
   // Custom breadcrumb items for the post
   const breadcrumbItems = [
-    { label: 'Inicio', href: '/' },
+    { label: t('navigation:breadcrumb.home'), href: '/' },
     { label: post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title, href: `/${post.slug}` }
   ];
 
@@ -181,10 +183,10 @@ export default function BlogPostPage() {
             </h1>
             
             <div className="flex justify-center items-center text-metadata text-secondary font-body gap-2">
-              <span>Por {post.author.name}</span>
+              <span>{t('blog:articles.by')} {post.author.name}</span>
               <span>•</span>
               <time dateTime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString('es-ES', {
+                {new Date(post.publishedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -226,7 +228,7 @@ export default function BlogPostPage() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="space-y-3">
                   <h3 className="text-section-header text-primary font-heading">
-                    Compartir este artículo
+                    {t('blog:articles.shareArticle')}
                   </h3>
                   <div className="flex gap-3">
                     <a
@@ -260,7 +262,7 @@ export default function BlogPostPage() {
                   onClick={() => window.location.href = '/'}
                   variant="primary"
                 >
-                  Ver más artículos
+                  {t('blog:articles.seeAllArticles')}
                 </Button>
               </div>
             </div>
