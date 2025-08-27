@@ -41,3 +41,18 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# Local development scripts
+*.js
+!src/**/*.js
+!next.config.js
+!tailwind.config.js
+!postcss.config.js
+*_post.js
+*_posts.js
+*_categories.js
+*_metadata.js
+fix_*.js
+update_*.js
+check_*.js
+create_*.js
