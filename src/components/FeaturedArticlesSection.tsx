@@ -68,9 +68,14 @@ export default function FeaturedArticlesSection({
           variant="primary" 
           size="lg"
           onClick={onViewAllClick}
-          className="font-semibold"
+          className="font-semibold px-8 py-4 group transition-all duration-300 hover:scale-105 hover:shadow-xl min-w-[200px]"
         >
-          {t('common:viewAll')} {t('navigation:articles')}
+          <span className="flex items-center justify-center">
+            {t('common:viewAll')} {t('navigation:articles')}
+            <svg className="w-5 h-5 ml-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </span>
         </Button>
       </div>
     </section>

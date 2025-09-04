@@ -19,7 +19,7 @@ jest.mock('@/lib/i18n/hooks/useClientTranslation', () => ({
 
 // Mock LoadingSpinner component
 jest.mock('../LoadingSpinner', () => {
-  return function LoadingSpinner({ size, className }: { size?: string; className?: string }) {
+  return function LoadingSpinner({ className }: { size?: string; className?: string }) {
     return <div data-testid="loading-spinner" className={className}>Loading...</div>;
   };
 });

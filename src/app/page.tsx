@@ -14,6 +14,7 @@ import EthicsIconPattern from '@/components/ui/EthicsIconPattern';
 import FeaturedArticlesSection from '@/components/FeaturedArticlesSection';
 import StatisticsSection from '@/components/StatisticsSection';
 import TopicsSection from '@/components/TopicsSection';
+import JsonLd from '@/components/seo/JsonLd';
 import useClientTranslation from '@/lib/i18n/hooks/useClientTranslation';
 import { formatDate } from '@/lib/utils/dateFormatter';
 
@@ -32,7 +33,6 @@ interface BlogPost {
     slug: string;
   }>;
 }
-
 
 interface Category {
   id: string;
@@ -463,8 +463,12 @@ function HomePageContent(): JSX.Element {
 
 export default function HomePage(): JSX.Element {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <HomePageContent />
-    </Suspense>
+    <>
+      <JsonLd type="website" />
+      <JsonLd type="organization" />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HomePageContent />
+      </Suspense>
+    </>
   );
 }

@@ -103,7 +103,14 @@ The [specific legislation/organization](URL) provides frameworks for protection,
 - Solutions-oriented conclusion with actionable elements
 
 **❌ UNIVERSAL AVOID LIST:**
-- **No title repetition** (auto-displayed in hero section)
+
+### ⚠️ CRITICAL: Title Duplication Prevention
+- **NEVER start content with H1 header matching post title** (title auto-displays in hero section)
+- **NEVER include `# Post Title` as first line of markdown content**
+- **Post title appears automatically** in hero section - content should start with hook or H2
+- **Example violation**: If post title is "AI Ethics in Healthcare", DO NOT start content with `# AI Ethics in Healthcare`
+
+### Other Critical Avoidances
 - **No generic openings**: "In today's world," "Technology is changing," "We live in an era," "It's no secret that"
 - **No walls of text** (break every 200-300 words with subheadings)
 - **No missing links** (3-5 external links MANDATORY for any topic)
@@ -189,7 +196,25 @@ The [specific legislation/organization](URL) provides frameworks for protection,
 
 ## 🚀 Universal Publishing Protocol
 
+### ✏️ Content Creation Workflow
+
+**Step 1: Title Creation**
+- Create compelling post title (50-60 characters)
+- ⚠️ **Remember**: This title will auto-display in hero section
+
+**Step 2: Content Writing**
+- ✅ **START with engaging hook** (specific person/scenario)
+- ❌ **NEVER start with `# [Your Post Title]`**
+- ✅ **First heading should be H2** (`## Section Title`)
+- Content flows: Hook → Bridge → Body → Payoff
+
+**Step 3: Structure Review**
+- Ensure no H1 headers in content (only H2, H3, H4)
+- Verify first line is compelling hook, not title repetition
+- Check 200-300 word section breaks
+
 ### MANDATORY Pre-Publication Checklist (ANY TOPIC)
+- [ ] **NO TITLE DUPLICATION**: Content does NOT start with H1 matching post title
 - [ ] **LINKS VERIFIED**: Minimum 3-5 external links, all return HTTP 200 status
 - [ ] **Title optimized**: 50-60 characters, topic-relevant keywords, compelling
 - [ ] **Hook implemented**: Specific person/scenario opening (no generic intros)
