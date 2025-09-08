@@ -55,7 +55,7 @@ const updatePostHandler = async (
   try {
     const resolvedParams = await params;
     const body = await request.json();
-    const { title, excerpt, content, categoryId, status, imageUrl } = body;
+    const { title, excerpt, content, categoryId, status, imageUrl, publishedAt } = body;
 
     // Check if post exists
     const existingPost = await prisma.post.findUnique({
@@ -105,9 +105,21 @@ const updatePostHandler = async (
     if (content !== undefined) updateData.content = content;
     if (status !== undefined) {
       updateData.status = status;
-      if (status === 'PUBLISHED' && existingPost.status !== 'PUBLISHED') {
-        updateData.publishedAt = new Date();
+      if (status === 'PUBLISHED') {
+        // If publishedAt is provided, use it; otherwise use current date for newly published posts
+        if (publishedAt) {
+          updateData.publishedAt = new Date(publishedAt);
+        } else if (existingPost.status !== 'PUBLISHED') {
+          updateData.publishedAt = new Date();
+        }
+      } else if (status === 'DRAFT') {
+        // When changing from PUBLISHED to DRAFT, clear publishedAt
+        updateData.publishedAt = null;
       }
+    }
+    // Handle publishedAt updates for already published posts
+    if (publishedAt !== undefined && status === 'PUBLISHED') {
+      updateData.publishedAt = publishedAt ? new Date(publishedAt) : new Date();
     }
     if (imageUrl !== undefined) updateData.featuredImage = imageUrl || null;
     if (slug !== existingPost.slug) updateData.slug = slug;

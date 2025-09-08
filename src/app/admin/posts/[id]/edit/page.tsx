@@ -27,6 +27,7 @@ interface FormData {
   categoryId: string;
   status: 'PUBLISHED' | 'DRAFT';
   imageUrl: string;
+  publishedAt: string;
 }
 
 function EditPostContent() {
@@ -38,6 +39,7 @@ function EditPostContent() {
     categoryId: '',
     status: 'DRAFT',
     imageUrl: '',
+    publishedAt: '',
   });
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -75,6 +77,18 @@ function EditPostContent() {
     return turndownService.turndown(html);
   };
 
+  // Helper function to format date for datetime-local input
+  const formatDateForInput = (dateString: string | null) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   const fetchPost = async () => {
     try {
       const response = await fetch(`/api/posts/${postId}`);
@@ -94,6 +108,7 @@ function EditPostContent() {
           categoryId: post.categoryId,
           status: post.status,
           imageUrl: post.imageUrl || '',
+          publishedAt: formatDateForInput(post.publishedAt),
         });
       } else {
         alert(t('messages.postNotFound'));
@@ -137,7 +152,18 @@ function EditPostContent() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Auto-populate publishedAt when status changes to PUBLISHED and no date is set
+    if (name === 'status' && value === 'PUBLISHED' && !formData.publishedAt) {
+      const now = new Date();
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        publishedAt: formatDateForInput(now.toISOString())
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleContentChange = (value: string | undefined) => {
@@ -287,6 +313,24 @@ function EditPostContent() {
                       }
                     </div>
                   </div>
+
+                  {formData.status === 'PUBLISHED' && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Published Date & Time
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="publishedAt"
+                        value={formData.publishedAt}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      />
+                      <div className="mt-2 text-xs text-gray-500">
+                        Set the exact date and time when this post should appear as published.
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Card>
 
